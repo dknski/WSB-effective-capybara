@@ -52,7 +52,7 @@
                     "bundleName": "project1.i18n.i18n"
                 }
             },
-            "Employees": {
+            "Materials": {
                 "type": "sap.ui.model.json.JSONModel",
                 "uri": "model/mockdata.json"
             }
@@ -85,7 +85,7 @@
                     ]
                 },
                 {
-                    "pattern": "detail/{employeeID}",
+                    "pattern": "detail/{MaterialID}",
                     "name": "Detail",
                     "target": "Detail"
                 }

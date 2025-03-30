@@ -18,13 +18,13 @@ sap.ui.define([
         },
 
         _onObjectMatched: function (oEvent) {
-            let sEmployeeID = oEvent.getParameter("arguments").employeeID,
-                oModel = this.getView().getModel("Employees"),
-                aEmployees = oModel.getProperty("/Employees"),
-                oEmployee = aEmployees.find(emp => emp.ID === sEmployeeID),
-                oEmployeeModel = new sap.ui.model.json.JSONModel(oEmployee);
+            let sMaterialID = oEvent.getParameter("arguments").MaterialID,
+                oModel = this.getView().getModel("Materials"),
+                aMaterials = oModel.getProperty("/Materials"),
+                oMaterial = aMaterials.find(emp => emp.ID === sMaterialID),
+                oMaterialModel = new sap.ui.model.json.JSONModel(oMaterial);
 
-            this.getView().setModel(oEmployeeModel, "employeeModel");
+            this.getView().setModel(oMaterialModel, "materialModel");
         },
 
         onBackPress: function () {
@@ -37,36 +37,36 @@ sap.ui.define([
         },
 
         onSavePress: function () {
-            let oEmployeeModel = this.getView().getModel("employeeModel"),
-                oEmployeeData = oEmployeeModel.getData();
+            let oMaterialModel = this.getView().getModel("MaterialModel"),
+                oMaterialData = oMaterialModel.getData();
 
-            // Zaktualizowanie danych w modelu "Employees"
-            let oEmployeesModel = this.getView().getModel("Employees"),
-                aEmployees = oEmployeesModel.getProperty("/Employees");
+            // Zaktualizowanie danych w modelu "Materials"
+            let oMaterialsModel = this.getView().getModel("Materials"),
+                aMaterials = oMaterialsModel.getProperty("/Materials");
 
-            let iIndex = aEmployees.findIndex(emp => emp.ID === oEmployeeData.ID);
+            let iIndex = aMaterials.findIndex(emp => emp.ID === oMaterialData.ID);
             if (iIndex !== -1) {
-                aEmployees[iIndex] = oEmployeeData; // Aktualizacja danych
+                aMaterials[iIndex] = oMaterialData; // Aktualizacja danych
             }
 
-            oEmployeesModel.setProperty("/Employees", aEmployees);
+            oMaterialsModel.setProperty("/Materials", aMaterials);
 
             this.getView().getModel("editModel").setProperty("/editMode", false);
 
-            MessageToast.show("Employee details saved successfully.");
+            MessageToast.show("Material details saved successfully.");
         },
 
         // Funkcja anulująca edycję
         onCancelPress: function () {
             // Przywrócenie początkowych danych użytkownika
-            let oEmployeeModel = this.getView().getModel("employeeModel"),
-                oEmployeeData = oEmployeeModel.getData();
+            let oMaterialModel = this.getView().getModel("MaterialModel"),
+                oMaterialData = oMaterialModel.getData();
 
             // Ponownie ustawiamy dane w modelu, aby anulować zmiany
-            let oModel = this.getView().getModel("Employees"),
-                aEmployees = oModel.getProperty("/Employees"),
-                oOriginalEmployee = aEmployees.find(emp => emp.ID === oEmployeeData.ID);
-            oEmployeeModel.setData(oOriginalEmployee);
+            let oModel = this.getView().getModel("Materials"),
+                aMaterials = oModel.getProperty("/Materials"),
+                oOriginalMaterial = aMaterials.find(emp => emp.ID === oMaterialData.ID);
+            oMaterialModel.setData(oOriginalMaterial);
 
             this.getView().getModel("editModel").setProperty("/editMode", false);
 

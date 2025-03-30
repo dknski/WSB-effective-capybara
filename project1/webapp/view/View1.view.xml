@@ -5,31 +5,31 @@
     xmlns:fb="sap.ui.comp.filterbar">
     <Page id="page" title="{i18n>title}">
         <VBox>
-            <fb:FilterBar id="filterbar" persistencyKey="employeeFilterKey" useToolbar="false" filterChange="onFilterChange">
+            <fb:FilterBar id="filterbar" persistencyKey="materialFilterKey" useToolbar="false" filterChange="onFilterChange">
                 <fb:filterGroupItems>
-                    <fb:FilterGroupItem name="Name" label="Name" groupName="Group1" visibleInFilterBar="true">
+                    <fb:FilterGroupItem name="Name" label="Nazwa" groupName="Group1" visibleInFilterBar="true">
                         <fb:control>
                             <Input id="idNameInput" liveChange="onFilterChange" />
                         </fb:control>
                     </fb:FilterGroupItem>
-                    <fb:FilterGroupItem name="LastName" label="Last Name" groupName="Group1" visibleInFilterBar="true">
+                    <fb:FilterGroupItem name="Type" label="Typ" groupName="Group1" visibleInFilterBar="true">
                         <fb:control>
-                            <Input id="idLastNameInput" liveChange="onFilterChange" />
+                            <Input id="idTypeInput" liveChange="onFilterChange" />
                         </fb:control>
                     </fb:FilterGroupItem>
-                    <fb:FilterGroupItem name="Position" label="Position" groupName="Group1" visibleInFilterBar="true">
+                    <fb:FilterGroupItem name="Weight" label="Waga" groupName="Group1" visibleInFilterBar="true">
                         <fb:control>
-                            <Input id="idPositionInput" liveChange="onFilterChange" />
+                            <Input id="idWeightInput" liveChange="onFilterChange" />
                         </fb:control>
                     </fb:FilterGroupItem>
                 </fb:filterGroupItems>
             </fb:FilterBar>
-            <Table id="table" items="{path:'Employees>/Employees', sorter: {path: 'FirstName'}}" mode="SingleSelectLeft"  itemPress="onEmployeePress" selectionChange="onItemSelected">
+            <Table id="table" items="{path:'Materials>/Materials', sorter: {path: 'Name'}}" mode="SingleSelectLeft"  itemPress="onMaterialPress" selectionChange="onItemSelected">
                 <headerToolbar>
                     <OverflowToolbar id="otbSubheader">
                         <ToolbarSpacer/>
-                        <Button icon="sap-icon://add" text="Add Employee" tooltip="Add Employee" press="onAddEmployee" />
-                        <Button id="removeEmployeeBtn" icon="sap-icon://delete" text="Remove Employee" tooltip="Remove Employee" press="onDeleteEmployee" enabled="false" />
+                        <Button icon="sap-icon://add" text="AddMaterial" tooltip="AddMaterial" press="onAddMaterial" />
+                        <Button id="removeMaterialBtn" icon="sap-icon://delete" text="RemoveMaterial" tooltip="RemoveMaterial" press="onDeleteMaterial" enabled="false" />
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
@@ -37,18 +37,18 @@
                         <Text text="{i18n>nameColumnTxt}" />
                     </Column>
                     <Column>
-                        <Text text="{i18n>lastNameColumnTxt}" />
+                        <Text text="{i18n>typeColumnTxt}" />
                     </Column>
                     <Column>
-                        <Text text="{i18n>positionColumnTxt}" />
+                        <Text text="{i18n>weightColumnTxt}" />
                     </Column>
                 </columns>
                 <items>
                     <ColumnListItem type="Navigation">
                         <cells>
-                            <Text text="{Employees>FirstName}" />
-                            <Text text="{Employees>LastName}" />
-                            <Text text="{Employees>Position}" />
+                            <Text text="{Materials>Name}" />
+                            <Text text="{Materials>Type}" />
+                            <Text text="{Materials>Weight}" />
                         </cells>
                     </ColumnListItem>
                 </items>

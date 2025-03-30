@@ -11,14 +11,14 @@ sap.ui.define([
         onInit() {
         },
 
-        onEmployeePress: function (oEvent) {
+        onMaterialPress: function (oEvent) {
             let oItem = oEvent.getParameter("listItem");
-            let oContext = oItem.getBindingContext("Employees");
+            let oContext = oItem.getBindingContext("Materials");
             let sPath = oContext.getPath();
-            let sEmployeeID = this.getView().getModel("Employees").getProperty(sPath).ID;
+            let sMaterialID = this.getView().getModel("Materials").getProperty(sPath).ID;
             let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-            oRouter.navTo("Detail", { employeeID: sEmployeeID });
+            oRouter.navTo("Detail", { MaterialID: sMaterialID });
         },
 
         onInputLiveChange: function (oEvent) {
@@ -46,13 +46,13 @@ sap.ui.define([
             }
         },
 
-        onAddEmployee: function () {
+        onAddMaterial: function () {
             let oView = this.getView();
 
             if (!this.pDialog) {
                 this.pDialog = Fragment.load({
                     id: oView.getId(),
-                    name: "project1.view.fragment.AddEmployee",
+                    name: "project1.view.fragment.AddMaterial",
                     controller: this
                 }).then(function (oDialog) {
                     oView.addDependent(oDialog);
@@ -65,41 +65,42 @@ sap.ui.define([
             });
         },
 
-        onSaveEmployee: function () {
+        onSaveMaterial: function () {
             let oView = this.getView(),
-                oModel = oView.getModel('Employees'),
-                aEmployees = oModel.getData().Employees;
+                oModel = oView.getModel('Materials'),
+                aMaterials = oModel.getData().Materials;
 
-            let sFirstName = oView.byId("firstNameInput").getValue(),
-                sLastName = oView.byId("lastNameInput").getValue(),
-                sPosition = oView.byId("positionInput").getValue(),
-                sEmail = oView.byId("emailInput").getValue(),
-                sPhone = oView.byId("phoneInput").getValue();
+            let sName = oView.byId("NameInput").getValue(),
+                sType = oView.byId("TypeInput").getValue(),
+                sWeight = oView.byId("WeightInput").getValue(),
+                sDesc = oView.byId("DescriptionInput").getValue();
+                // sEmail = oView.byId("emailInput").getValue(),
+                // sPhone = oView.byId("phoneInput").getValue(),
 
-            if (!sFirstName || !sLastName || !sPosition) {
+            if (!sName || !sType || !sWeight) {
                 MessageToast.show("Please fill in required fields.");
                 return;
             }
 
-            let newEmployee = {
-                "ID": (aEmployees.length + 1).toString(),
-                "FirstName": sFirstName,
-                "LastName": sLastName,
-                "Position": sPosition,
-                "Email": sEmail,
-                "Phone": sPhone,
-                "Description": "Newly added employee."
+            let newMaterial = {
+                "ID": (aMaterials.length + 1).toString(),
+                "Name": sName,
+                "Type": sType,
+                "Weight": sWeight,
+                // "Email": sEmail,
+                // "Phone": sPhone,
+                "Description": sDesc
             };
 
-            aEmployees.push(newEmployee);
-            oModel.setProperty("/Employees", aEmployees);
+            aMaterials.push(newMaterial);
+            oModel.setProperty("/Materials", aMaterials);
 
-            MessageToast.show("Employee added!");
+            MessageToast.show("Material added!");
             this._clearForm();
-            this.onCancelEmployee();
+            this.onCancelMaterial();
         },
 
-        onCancelEmployee: function () {
+        onCancelMaterial: function () {
             this.pDialog.then(function (oDialog) {
                 oDialog.close();
             });
@@ -109,9 +110,9 @@ sap.ui.define([
         _clearForm: function () {
             let oView = this.getView(),
                 aInputs = [
-                    "firstNameInput",
-                    "lastNameInput",
-                    "positionInput",
+                    "NameInput",
+                    "TypeInput",
+                    "WeightsWeightInput",
                     "emailInput",
                     "phoneInput"
                 ];
@@ -125,38 +126,38 @@ sap.ui.define([
             });
         },
 
-        onDeleteEmployee: function () {
+        onDeleteMaterial: function () {
             let oTable = this.getView().byId("table"),
                 aSelectedItems = oTable.getSelectedItems(); // Zwraca tablicę zaznaczonych elementów
 
             // Pobieramy model z listą użytkowników
-            let oModel = this.getView().getModel("Employees");
-            let aEmployees = oModel.getProperty("/Employees");
+            let oModel = this.getView().getModel("Materials");
+            let aMaterials = oModel.getProperty("/Materials");
 
             // Usuwamy użytkowników na podstawie zaznaczonego indeksu
             aSelectedItems.forEach(function (oItem) {
-                let oContext = oItem.getBindingContext("Employees");
-                let sEmployeeID = oContext.getProperty("ID"); // Pobieramy ID użytkownika
-                let iIndex = aEmployees.findIndex(emp => emp.ID === sEmployeeID);
+                let oContext = oItem.getBindingContext("Materials");
+                let sMaterialID = oContext.getProperty("ID"); // Pobieramy ID użytkownika
+                let iIndex = aMaterials.findIndex(emp => emp.ID === sMaterialID);
                 if (iIndex !== -1) {
-                    aEmployees.splice(iIndex, 1); // Usuwamy pracownika
+                    aMaterials.splice(iIndex, 1); // Usuwamy pracownika
                 }
             });
 
             // aktualizujemy model
-            oModel.setProperty("/Employees", aEmployees);
+            oModel.setProperty("/Materials", aMaterials);
 
             // Wyczyść wybór w tabeli
             oTable.removeSelections(true);
 
-            this.getView().byId("removeEmployeeBtn").setEnabled(false);
+            this.getView().byId("removeMaterialBtn").setEnabled(false);
 
-            MessageToast.show("Employee deleted successfully.");
+            MessageToast.show("Material deleted successfully.");
         },
 
         onItemSelected: function () {
             let oTable = this.getView().byId("table"),
-                oRemoveButton = this.getView().byId("removeEmployeeBtn"),
+                oRemoveButton = this.getView().byId("removeMaterialBtn"),
                 aSelectedItems = oTable.getSelectedItems();
 
             if (aSelectedItems.length > 0) {
@@ -170,21 +171,21 @@ sap.ui.define([
             let oView = this.getView(),
                 oTable = oView.byId("table"),
                 sName = oView.byId("idNameInput").getValue(),
-                sLastName = oView.byId("idLastNameInput").getValue(),
-                sPosition = oView.byId("idPositionInput").getValue(),
+                sType = oView.byId("idTypeInput").getValue(),
+                sWeight = oView.byId("idWeightInput").getValue(),
                 aFilters = [];
 
             // Tworzenie filtrów na podstawie wartości wprowadzonych przez użytkownika
             if (sName) {
-                aFilters.push(new Filter("FirstName", FilterOperator.Contains, sName));
+                aFilters.push(new Filter("Name", FilterOperator.Contains, sName));
             }
 
-            if (sLastName) {
-                aFilters.push(new Filter("LastName", FilterOperator.Contains, sLastName));
+            if (sType) {
+                aFilters.push(new Filter("Type", FilterOperator.Contains, sType));
             }
 
-            if (sPosition) {
-                aFilters.push(new Filter("Position", FilterOperator.Contains, sPosition));
+            if (sWeight) {
+                aFilters.push(new Filter("Weight", FilterOperator.Contains, sWeight));
             }
 
             let oBinding = oTable.getBinding("items");

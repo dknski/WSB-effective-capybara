@@ -17,38 +17,38 @@
             type="Emphasized"
             class="sapUiSmallMarginTop" />
         
-        <Panel headerText="{i18n>employeeDetails}" class="sapUiSmallMarginTop" expandable="false">
+        <Panel headerText="{i18n>materialDetails}" class="sapUiSmallMarginTop" expandable="false">
             <HBox>
                 <Avatar class="sapUiSmallMarginEnd" initials="IS" />
                 
                 <VBox class="sapUiMediumMarginEnd">
-                    <!-- Imię -->
-                    <Text text="Imię: " />
-                    <Input value="{employeeModel>/FirstName}" editable="{=${editModel>/editMode} }"/>
+                    <!-- Nazwa -->
+                    <Text text="Nazwa: " />
+                    <Input value="{materialModel>/Name}" editable="{=${editModel>/editMode} }"/>
 
                     <!-- Nazwisko -->
-                    <Text text="Nazwisko: " />
-                    <Input value="{employeeModel>/LastName}" editable="{=${editModel>/editMode} }"/>
+                    <Text text="Typ: " />
+                    <Input value="{materialModel>/Type}" editable="{=${editModel>/editMode} }"/>
 
                     <!-- Stanowisko -->
-                    <Text text="Stanowisko: " />
-                    <Input value="{employeeModel>/Position}" editable="{=${editModel>/editMode} }"/>
+                    <Text text="Waga: " />
+                    <Input value="{materialModel>/Weight}" editable="{=${editModel>/editMode} }"/>
                 </VBox>
                 
-                <VBox>
+                <!-- <VBox> -->
                     <!-- Email -->
-                    <Text text="Email: " />
-                    <Input value="{employeeModel>/Email}" type="Email" editable="{=${editModel>/editMode} }"/>
+                    <!-- <Text text="Email: " /> -->
+                    <!-- <Input value="{materialModel>/Email}" type="Email" editable="{=${editModel>/editMode} }"/> -->
 
                     <!-- Numer telefonu -->
-                    <Text text="Numer telefonu: " />
-                    <Input value="{employeeModel>/Phone}" type="Tel" editable="{=${editModel>/editMode} }"/>
-                </VBox>
+                    <!-- <Text text="Numer telefonu: " /> -->
+                    <!-- <Input value="{materialModel>/Phone}" type="Tel" editable="{=${editModel>/editMode} }"/> -->
+                <!-- </VBox> -->
             </HBox>
         </Panel>
 
-        <Panel headerText="Opis stanowiska" class="sapUiSmallMarginTop" expandable="false">
-            <Input value="{employeeModel>/Description}" editable="{=${editModel>/editMode} }"/>
+        <Panel headerText="Opis materiału" class="sapUiSmallMarginTop" expandable="false">
+            <Input value="{materialModel>/Description}" editable="{=${editModel>/editMode} }"/>
         </Panel>
 
         <!-- Przycisk Save oraz Cancel w trybie edycji -->
